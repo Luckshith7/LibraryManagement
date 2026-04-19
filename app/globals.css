@@ -1,26 +1,154 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand Colors */
+  --color-primary: #012d1d;
+  --color-primary-container: #1b4332;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #d1fae5;
+
+  --color-secondary: #2d6a4f;
+  --color-secondary-container: #d1fbe9;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #065f46;
+
+  --color-error: #b91c1c;
+  --color-error-container: #fee2e2;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #7f1d1d;
+
+  /* Surface Tones */
+  --color-surface: #f9faf6;
+  --color-surface-bright: #f9faf6;
+  --color-surface-container-highest: #e2e3e0;
+  --color-surface-container-high: #e8e8e5;
+  --color-surface-container: #eeeeeb;
+  --color-surface-container-low: #f3f4f1;
+  --color-surface-container-lowest: #ffffff;
+
+  /* Text */
+  --color-on-surface: #1a1c1a;
+  --color-on-surface-variant: #414844;
+  --color-outline-variant: #c1c8c2;
+  --color-outline: #717877;
+
+  /* Fonts */
+  --font-newsreader: var(--font-newsreader);
+  --font-manrope: var(--font-manrope);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: var(--font-manrope), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-newsreader), Georgia, serif;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-outline-variant);
+    opacity: 0.5;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromBottom {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.slide-in-from-bottom-5 {
+  animation: slideInFromBottom 0.3s ease-out forwards;
+}
+
+.zoom-in-95 {
+  animation: zoomIn95 0.2s ease-out forwards;
+}
+
+@keyframes zoomIn95 {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-dark {
+    background: rgba(1, 45, 29, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .soft-ui-shadow {
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(0, 0, 0, 0.01);
+  }
+
+  .soft-ui-shadow-hover:hover {
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(0, 0, 0, 0.02);
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+.transition-soft {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
